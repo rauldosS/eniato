@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SHORT_DATE_FORMAT = 'd/m/Y'
-
+0
 # Application definition
 
 DJANGO_APPS = [
@@ -45,9 +45,21 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'webpack_loader',
     'corsheaders',
+    'django_extensions',
+    'crispy_forms',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
-PROJECT_APPS = []
+SITE_ID = 1
+
+PROJECT_APPS = [
+    'apps.core.apps.CoreConfig'
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -117,6 +129,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -162,8 +179,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 
-# STATICFILES_DIRS = [
-    # str(BASE_DIR / 'static_src'),
-#]
+STATICFILES_DIRS = [
+    str(BASE_DIR / 'static_src'),
+]
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

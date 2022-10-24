@@ -1,0 +1,12 @@
+django-debug-toolbar
+django-test-without-migrations
+ipdb
+model-mommy
+mock
+freezegun
+rope-py3k
+autopep8
+vcrpy
+pylint
+flake8
+coverage

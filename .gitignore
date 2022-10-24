@@ -1,0 +1,13 @@
+env/*
+.env
+.coverage
+*.sqlite
+__pycache__/
+*~
+\#*\#
+.\#*
+node_modules
+dotenv.j2
+brnet_campaign/vue-app/coverage/
+.vscode/
+coverage.xml
