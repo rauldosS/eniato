@@ -36,11 +36,16 @@ CARD_TYPE_DISPLAY_NAME = (
 class TransactionType(Enum):
     INCOME = 'income'
     EXPENSE = 'expense'
+    CREDIT = 'credit'
+    TRANSFER = 'transfer'
 
 CATEGORY_TYPE_DISPLAY_NAME = (
     (TransactionType.INCOME.value, 'Receita'),
     (TransactionType.EXPENSE.value, 'Despesa'),
+    (TransactionType.CREDIT.value, 'Crédito'),
+    (TransactionType.TRANSFER.value, 'Transferência'),
 )
+
 
 class Color(Enum):
     """
