@@ -1,0 +1,23 @@
+{% extends 'admin/base_site.html' %}
+
+{% block title %}ENIATO{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">ENIATO</a></h1>
+{% endblock %}
+
+{% block extrahead %}
+    {{super}}
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous">
+    </script>
+
+    {{ adminform.media.css }}
+{% endblock %}
+
+{% block footer %}
+    {{super}}
+    {{ adminform.media.js }}
+{% endblock %}

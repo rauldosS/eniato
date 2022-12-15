@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container" style="max-width:800px">
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">{{ account.description }}</h1>
+        <div class="d-flex flex-column justify-content-between align-items-center">
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Instituição Financeira</p>
+                <p class="text-muted">{{ account.financial_institution.name }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Saldo inicial</p>
+                <p class="text-muted">{{ account.display_opening_balance }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Saldo Atual</p>
+                <p class="text-muted">{{ account.display_current_balance }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Tipo de conta</p>
+                <p class="text-muted">{{ account.display_account_type }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Cor da conta</p>
+                <div class="color {{ account.color }}"></div>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Conta padrão</p>
+                <p class="text-muted">{{ account.display_default }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Conta ativa</p>
+                <p class="text-muted">{{ account.display_active }}</p>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <p class="fw-bold">Incluir na soma da tela inicial</p>
+                <p class="text-muted">{{ account.display_include_on_dashboard }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,24 +1,33 @@
 from django.db import models
 from lib.framework.models.base_model import BaseModel
 
-from apps.transaction.models.category import Category
+from apps.category.models import Category
+from apps.transaction.models.daily_balance import DailyBalance
 from apps.transaction.models.store import Store
 from apps.transaction.models.tag import Tag
+from apps.transaction.models.recurrence import Recurrence
 
-from apps.credit_card.models.credit_card import CreditCard
+
 from apps.accounts.models.account import Account
 
-from apps.core.constants import PaymentMethodType, TransactionType
+from apps.transaction.constants import TransactionType
 
 
 class Transaction(BaseModel):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='Categoria')
-    credit_card = models.ForeignKey(CreditCard, on_delete=models.CASCADE, related_name='Cartão de crédito', null=True, blank=True)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='Cartão de crédito', null=True, blank=True)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='Loja', null=True, blank=True)
-    tag = models.ManyToManyField(Tag, on_delete=models.CASCADE, related_name='Tags', null=True, blank=True)
+    daily_balance = models.ForeignKey(DailyBalance, on_delete=models.CASCADE, verbose_name='Balanço diário', null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_transaction')
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='account_transaction', null=True, blank=True)
+    destination_account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='destination_account_transaction', null=True, blank=True)
+
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='store_transaction', null=True, blank=True)
+    tag = models.ManyToManyField(Tag, related_name='tags_transaction', blank=True)
+    recurrence = models.ForeignKey(Recurrence, on_delete=models.CASCADE, related_name='recorrence_transaction', null=True, blank=True)
+
+    installment = models.IntegerField(verbose_name='Parcela', null=True, blank=True)
 
     value = models.DecimalField(verbose_name='Valor', max_digits=10, decimal_places=2, default=0.00)
+    description = models.CharField(verbose_name='Descrição', max_length=255)
     transaction_date = models.DateField(verbose_name='Data', blank=False, null=False)
     transaction_type = models.CharField(
         choices=[(transaction_type.value, transaction_type.name) for transaction_type in TransactionType],
@@ -28,13 +37,9 @@ class Transaction(BaseModel):
 
     status = models.BooleanField(verbose_name='Situação', default=False)
     ignore = models.BooleanField(verbose_name='Ignorar transação', default=False)
-    calculate = models.BooleanField(verbose_name='Calcular', default=False)
 
-    file = models.FileField(verbose_name='Arquivo', uppload_to='uploads/transitions/files/%Y/%m/%d/')
+    file = models.FileField(verbose_name='Arquivo', upload_to='uploads/transitions/%Y/%m/%d/', null=True, blank=True)
     observation = models.TextField(verbose_name='Observação', null=True, blank=True)
-
-    # recurrence = models.ForeignKey(Recurrence, on_delete=models.CASCADE, related_name='Recorrência', null=True, blank=True)
-    fixed = models.BooleanField(verbose_name='Fixa', default=False)
 
     class Meta:
         verbose_name = 'Transação'

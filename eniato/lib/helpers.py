@@ -1,6 +1,9 @@
 import decimal
+import locale
+
 from dateutil.parser import parse
 
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 EMPTY_VALUES = [None, '']
 
@@ -39,3 +42,6 @@ def datetime_or_none(value):
         return parse(value)
     except (ValueError, TypeError):
         return None
+
+def local_currency(value, grouping=True, symbol=True):
+    return locale.currency(value, grouping=grouping, symbol=symbol)

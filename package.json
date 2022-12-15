@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "vue-float-action-button": "^0.7.9",
+    "vue-material-design-icons": "^5.1.2"
+  }
+}

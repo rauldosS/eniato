@@ -37,9 +37,9 @@ class BaseRepository(abc.ABC):
             raise exception
 
         if self.factory:
-            return self.factory.build_from_model(item)
+            return self.factory.create_from_model(item)
 
-        return self.domain_object.build_from_model(item)
+        return self.domain_object.create_from_model(item)
 
     def _build_domain(self, qs):
         if self.factory:
@@ -48,7 +48,7 @@ class BaseRepository(abc.ABC):
 
         if self.domain_object:
             for item in qs:
-                yield self.domain_object.build_from_model(item)
+                yield self.domain_object.create_from_model(item)
 
     def _get_queryset(self):
         return self.model.stored.all()

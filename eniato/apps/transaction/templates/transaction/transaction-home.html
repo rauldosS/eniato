@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<iframe id="transaction_list" src="{% url 'transaction:list' %}?month=11&year=2022" frameborder="0" scrolling="no"></iframe>
+
+<div class="fab" data-bs-backdrop="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+</div>
+
+<div class="box">
+    <a href="{% url 'transaction:create' 'receita' %}" class="btn btn-success item fs-5 mb-2 item1 active-tooltip">
+        <span class="me-2 fs-6">Receita</span>
+        <i class="bi bi-graph-up-arrow"></i>
+    </a>
+    <a href="{% url 'transaction:create' 'despesa' %}" class="btn btn-danger item fs-5 mb-2 item2 active-tooltip">
+        <span class="me-2 fs-6">Despesa</span>
+        <i class="bi bi-graph-down-arrow"></i>
+    </a>
+    <a href="{% url 'transaction:create' 'credito' %}" class="btn btn-secondary text-white item fs-5 mb-2 item3 active-tooltip">
+        <span class="me-2 fs-6">Crédito</span>
+        <i class="bi bi-credit-card"></i>
+    </a>
+    <a href="{% url 'transaction:create' 'transferencia' %}" class="btn btn-primary item fs-5 mb-2 item4 active-tooltip">
+        <span class="me-2 fs-6">Transferência</span>
+        <i class="bi bi-repeat"></i>
+    </a>
+</div>
+{% endblock %}
+
+{% block custom_css %}
+    <style>
+        #transaction_list {
+            width: 100%;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            background-color: #356b8d;
+            box-shadow: 1px 2px 4px grey;
+            z-index: 1060;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+        }
+
+        .fab:hover {
+            cursor: pointer;
+        }
+
+        .fab svg {
+            transition: .4s
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: fixed;
+            height: 220px;
+            bottom: 100px;
+            right: 5px;
+            transition-delay: .3s;
+            width: 80px;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+            z-index: 1060;
+        }
+        
+        .item {
+            overflow: hidden;
+            border-radius: 12px;
+            transition: .4s ease-in;
+            width: 156px;
+            height: 44px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 1px 1px 3px grey;
+            position: relative;
+            right: 100px;
+        }
+
+        .box-active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .fab-active svg {
+            transform: rotate(225deg);
+        }
+
+        .month {
+            max-width: 300px;
+            left: 50%;
+            position: relative;
+            transform: translateX(-50%);
+        }
+
+        .month h5 {
+            margin: 0;
+        }
+    </style>
+{% endblock %}

@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import decouple
+
 BASE_DIR = Path(__file__).parents[1]
-#BASE_DIR = Path(__file__).resolve().parent.parent
+env_file = decouple.RepositoryEnv(str(BASE_DIR / ".env"))
+config = decouple.Config(env_file)
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SHORT_DATE_FORMAT = 'd/m/Y'
-0
+
 # Application definition
 
 DJANGO_APPS = [
@@ -43,30 +46,33 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'webpack_loader',
     'corsheaders',
     'django_extensions',
     'crispy_forms',
-
     'django.contrib.sites',
+    'webpack_loader',
+    'oauth2_provider',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 1
-
 PROJECT_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.accounts.apps.AccountsConfig',
+    'apps.category.apps.CategoryConfig',
     'apps.transaction.apps.TransactionConfig',
     'apps.credit_card.apps.CreditCardConfig',
     'apps.objective.apps.ObjectiveConfig',
     'apps.reports.apps.ReportsConfig'
 ]
 
+DEV_APPS = []
+
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
+
+SITE_ID = 1
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -98,6 +104,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.resolver_context_processor'
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -137,7 +144,6 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-
 ]
 
 # Password validation
@@ -178,18 +184,42 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
-
 STATICFILES_DIRS = [
     str(BASE_DIR / 'static_src'),
 ]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+AUTHENTICATION_BACKENDS = (
+    'oauth2_provider.backends.OAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+LOGIN_URL = '/accounts/login'
 
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+X_FRAME_OPTIONS = 'ALLOW-FROM'

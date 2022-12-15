@@ -1,0 +1,28 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.btn-google {
+  background-color: #F1F6F7 !important;
+  color: #969CA4 !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+  font-style: normal;
+}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock header %}
+
+{% block custom_css %}
+    <style>
+        body{
+            background-color: #273b4b !important;
+            color: #fff !important;
+        }
+        .logo-top{
+            margin-top: 50px;
+            margin-bottom: 90px;
+            width: 500px;
+        }
+        .display-code{
+            font-size: 8rem;
+            font-weight: 500;
+            line-height: 1.2
+        }
+        .lead-message{
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        .text-muted {
+            color: #FFFFFF !important;
+        }
+    </style>
+{% endblock custom_css %}
+
+{% block footer_logo %}
+    {% static 'images/brmed-logo-white-cropped.png' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="page-wrap d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <a href="/">
+                    <img src="{% static 'images/brmed-new-logo.png' %}" class='logo-top'>
+                </a>
+                <div class="col-md-12 text-center">
+                    <span class="d-block display-code">{{status_code}}</span>
+                    <div class="mb-2 lead-message">{{message}}</div>
+                    {% if text_error %}
+                        <div class="mb-2 lead">{{text_error}}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

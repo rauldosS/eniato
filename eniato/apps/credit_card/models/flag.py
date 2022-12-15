@@ -1,9 +1,6 @@
 from django.db import models
 from lib.framework.models.base_model import BaseModel
 
-from apps.core.models.account import Account
-from apps.core.models.bank import Bank
-
 
 class Flag(BaseModel):
     name = models.CharField(verbose_name='Nome', max_length=255)

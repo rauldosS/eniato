@@ -1,0 +1,81 @@
+{% load static %}
+
+{% block custom_css %}
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    
+    <!--=============== CSS ===============-->
+    <link href="{% static 'css/navigation.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+
+<!--=============== HEADER ===============-->
+<header class="header" id="header">
+    <nav class="nav container">
+        <a href="#" class="nav__logo ms-3 fw-bold fs-2">
+            Eniato
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="{% url 'transaction:home' %}" class="nav__link {% if app_name == 'transaction' %}active-link{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-up nav__icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                        <span class="nav__name">Transações</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="#skills" class="nav__link {% if app_name == 'reports' %}active-link{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart nav__icon" viewBox="0 0 16 16">
+                            <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                        </svg>
+                        <span class="nav__name">Relatórios</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="#skills" class="nav__link {% if app_name == 'planning' %}active-link{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-ui-checks-grid nav__icon" viewBox="0 0 16 16">
+                            <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z"/>
+                        </svg>
+                        <span class="nav__name">Planejamento</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="{% url 'accounts:home' %}" class="nav__link {% if app_name == '' %}active-link{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-record-circle nav__icon" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        </svg>
+                        <span class="nav__name">Objetivos</span>
+                    </a>
+                </li>
+
+                
+                <li class="nav__item">
+                    <a href="{% url 'accounts:home' %}" class="nav__link {% if app_name == '' %}active-link{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots nav__icon" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                        <span class="nav__name">Mais</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <a class="dropdown__toggle">
+            <img src="" alt="" class="nav__img">
+            <span class="jsx-3462261634 thumb">
+                <span class="ea-typography ea-typography--body-m et-text-light-solid text-white">RM</span>
+            </span>
+            <i aria-label="" aria-hidden="true" class="jsx-139964039 ecs-icon angle-down">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 1024 1024" role="img">
+                <path stroke="currentColor" d="M512 712c-0.022 0-0.048 0-0.074 0-11.022 0-20.997-4.48-28.204-11.719l-320.001-320.001c-6.947-7.186-11.228-16.987-11.228-27.788 0-22.091 17.909-40 40-40 10.801 0 20.603 4.281 27.8 11.239l291.709 291.709 291.72-291.72c7.186-6.947 16.987-11.228 27.788-11.228 22.091 0 40 17.909 40 40 0 10.801-4.281 20.603-11.239 27.8l-319.989 319.989c-7.209 7.24-17.184 11.72-28.206 11.72-0.026 0-0.052 0-0.078 0h0.004z"></path>
+                </svg>
+            </i>
+        </a>
+    </nav>
+</header>

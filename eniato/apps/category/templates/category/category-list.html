@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+<style>
+    .color {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 mb-4">Categorias</h1>
+        <div class="btn-group">
+            <button id="filter_category" type="button" class="btn btn-danger dropdown-toggle rounded-5" data-bs-toggle="dropdown" aria-expanded="false">
+                Categoria de Despesas
+            </button>
+            <ul class="dropdown-menu rounded-4">
+                <li>
+                    <div class="dropdown-item rounded-5" onclick="filterCategory('expense')">Categoria de Despesas</div>
+                </li>
+                <li>
+                    <div class="dropdown-item rounded-5" onclick="filterCategory('income')">Categoria de Receitas</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Ícone</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col" class="text-center" style="width: 100px">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr class="filter-category {{ category.category_type }}">
+                    <th>{{ category.name }}</th>
+                    <td>
+                        <i class="bi {{ category.icon }}"></i>
+                    </td>
+                    <td>
+                        <div class="color {{ category.color }}"></div>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-folder-x"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    const filter_category = document.getElementById('filter_category')
+
+    filterCategory = (category) => {
+        filter_category.textContent = category == 'expense' ? 'Categoria de Despesas' : 'Categoria de Receitas'
+        
+        changeClasses(
+            filter_category,
+            category == 'expense' ? 'btn-danger' : 'btn-success',
+            category == 'expense' ? 'btn-success' : 'btn-danger'
+        )
+
+        document.querySelectorAll('.filter-category').forEach(el => {
+            !el.classList.contains(category) ? el.classList.add('d-none') : el.classList.remove('d-none')
+        })
+    }
+
+    changeClasses = (element, add, remove) => {
+        element.classList.add(add)
+        element.classList.remove(remove)
+    }
+
+    filterCategory('expense')
+</script>
+{% endblock %}

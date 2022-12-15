@@ -1,8 +1,7 @@
-<!doctype html>
-
 {% load crispy_forms_tags %}
 {% load static %}
 
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -13,11 +12,13 @@
     <meta name="generator" content="Hugo 0.79.0">
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
 
-    <title>{% block titulo %}Aeroclub Videira{% endblock %}</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}" />
+    <link href="{% static 'vendor/select2/css/select2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <style>
         .bd-placeholder-img {
@@ -41,6 +42,29 @@
 </head>
 
 <body class="text-center">
+    <main class="form-signin w-100 m-auto">
+        <form>
+        <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+    
+        <div class="checkbox mb-3">
+            <label>
+            <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+        </form>
+    </main>
 
     <main class="form-signin">
         <form method="POST">

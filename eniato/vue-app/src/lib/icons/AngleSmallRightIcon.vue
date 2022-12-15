@@ -1,0 +1,26 @@
+<template>
+    <svg :height="this.height" :width="this.width" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.8111 18.707L9.40015 17.293L14.6891 12L9.40015 6.70697L10.8151 5.29297L16.1001 10.586C16.4751 10.961 16.6857 11.4696 16.6857 12C16.6857 12.5303 16.4751 13.0389 16.1001 13.414L10.8111 18.707Z"
+        :fill="this.color"/>
+    </svg>
+</template>
+
+<script>
+export default {
+  name: 'AngleSmallRightIcon',
+  props: {
+    width: {
+      type: Number,
+      default: 24
+    },
+    height: {
+      type: Number,
+      default: 24
+    },
+    color: {
+      type: String,
+      default: '#01394c'
+    }
+  }
+}
+</script>

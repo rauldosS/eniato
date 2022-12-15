@@ -14,9 +14,9 @@ class SoftDeleteManager(models.Manager):
 
 class SoftDeleteMixin(models.Model):
 
-    deleted = models.DateTimeField(null=True, default=None)
+    deleted = models.DateTimeField(null=True, default=None, blank=True)
     deleted_by = models.ForeignKey(
-        UserModel, related_name='+', null=True, default=None,
+        UserModel, related_name='+', null=True, default=None, blank=True,
         on_delete=models.SET_NULL,
     )
 
@@ -32,10 +32,6 @@ class SoftDeleteMixin(models.Model):
         self.deleted = None
         self.deleted_by = None
         self.save()
-
-    def clean_fields(self, *args, **kwargs):
-        kwargs['exclude'] += 'deleted', 'deleted_by'
-        return super().clean_fields(*args, **kwargs)
 
     class Meta:
         abstract = True
