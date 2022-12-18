@@ -15,4 +15,26 @@ export default class accountRepository {
       return dtoList.map(dto => this.factory.buildFromDTO(dto))
     })
   }
+
+  async save (data) {
+    const uri = `${this.baseUri}/${URLS.SAVE_ACCOUNT_URL}`
+    const form = {
+      id: data.id,
+      financial_institution_id: data.financialInstitution,
+      opening_balance: data.openingBalance,
+      description: data.description,
+      account_type: data.accountType,
+      color: data.color,
+      default: data.default
+    }
+
+    return this.requester.post(uri, form).then(({ data: dto }) => {
+      return dto
+    })
+  }
+
+  async delete (account) {
+    const uri = `${this.baseUri}/${URLS.DELETE_ACCOUNT_URL}`.replace('<account-id>', account.id)
+    return this.requester.post(uri)
+  }
 }

@@ -13,19 +13,31 @@ class AccountRepository(BaseRepository):
         self.factory = factory or AccountFactory()
 
     def get_by_user(self, user):
-        accounts = self.model.objects.filter(user=user).order_by('default', 'description')
+        accounts = self.model.stored.filter(user=user).order_by('-default', 'description')
         return [
             self.factory.create_from_model(account)
             for account in accounts
         ]
 
+    def get_account_default(self, user):
+        try:
+            return self.factory.create_from_model(
+                self.model.stored.get(user=user.id, default=True)
+            )
+        except self.model.DoesNotExist:
+            return None
+
+    def reset_default_account(self):
+        self.model.stored.filter(default=True).update(default=False)
+
     def get_model_by_user(self, user):
-        return self.model.objects.filter(user=user).order_by('default', 'description')
+        return self.model.stored.filter(user=user).order_by('default', 'description')
 
     def get_by_user_and_id(self, user, id):
         try:
-            account = self.model.objects.get(id=id, user=user)
-            return self.factory.create_from_model(account)
+            return self.factory.create_from_model(
+                self.model.stored.get(id=id, user=user)
+            )
         except self.model.DoesNotExist:
             return None
 
@@ -34,44 +46,24 @@ class AccountRepository(BaseRepository):
             current_balance=current_balance
         )
 
-    def create(self, account_domain):
-        account_model = self.model.stored.create(
-            user_id=account_domain.user.id,
-            financial_institution_id=account_domain.financial_institution.id,
-            opening_balance=account_domain.opening_balance,
-            current_balance=account_domain.current_balance,
-            description=account_domain.description,
-            account_type=account_domain.account_type,
-            color=account_domain.color,
-            default=account_domain.default,
-            active=account_domain.active,
-            include_on_dashboard=account_domain.include_on_dashboard,
-        )
+    def user_have_default_account(self, user):
+        return self.model.stored.filter(user=user.id, default=True).exists()
 
-        account_domain.set_id(account_model.id)
-
-        return account_domain
-
-    """
     def save(self, account_domain):
         account_model, created = self.model.stored.update_or_create(
             id=account_domain.id,
             defaults=dict(
-                user=account_domain.user,
-                financial_institution=account_domain.financial_institution.id,
+                user_id=account_domain.user.id,
+                financial_institution_id=account_domain.financial_institution.id,
                 opening_balance=account_domain.opening_balance,
                 current_balance=account_domain.current_balance,
                 description=account_domain.description,
                 account_type=account_domain.account_type,
                 color=account_domain.color,
-                default=account_domain.default,
-                active=account_domain.active,
-                include_on_dashboard=account_domain.include_on_dashboard,
+                default=account_domain.default
             )
         )
 
-        if created:
-            account_domain.set_id(account_model.id)
+        account_domain.set_id(account_model.id)
 
-        return account_domain, created
-    """
+        return account_domain

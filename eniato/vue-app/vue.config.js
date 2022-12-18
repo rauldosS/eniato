@@ -31,6 +31,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
+        '@core': path.join(__dirname, 'src/apps/core'),
         '@account': path.join(__dirname, 'src/apps/account'),
         '@category': path.join(__dirname, 'src/apps/category'),
         '@transaction': path.join(__dirname, 'src/apps/transaction'),

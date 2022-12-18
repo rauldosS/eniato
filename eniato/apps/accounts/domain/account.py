@@ -25,15 +25,17 @@ class Account:
         self.account_type: str = attributes['account_type']
         self.color: str = attributes['color']
         self.default: bool = attributes['default']
-        self.active: bool = attributes.get('active', True)
-        self.include_on_dashboard: bool = attributes['include_on_dashboard']
+        self.display_account_type: str = 'Teste'
 
     def set_id(self, id):
         self.id = id
 
-    @property
-    def display_account_type(self):
-        return dict(ACCOUNT_TYPE_DISPLAY_NAME)[self.account_type]
+    def set_default(self, default):
+        self.default = default
+
+    # @property
+    # def display_account_type(self):
+    #     return dict(ACCOUNT_TYPE_DISPLAY_NAME)[self.account_type]
 
     @property
     def display_opening_balance(self):
@@ -42,15 +44,3 @@ class Account:
     @property
     def display_current_balance(self):
         return local_currency(self.current_balance)
-
-    @property
-    def display_default(self):
-        return 'Sim' if self.default else 'Não'
-
-    @property
-    def display_active(self):
-        return 'Sim' if self.active else 'Não'
-
-    @property
-    def display_include_on_dashboard(self):
-        return 'Sim' if self.include_on_dashboard else 'Não'

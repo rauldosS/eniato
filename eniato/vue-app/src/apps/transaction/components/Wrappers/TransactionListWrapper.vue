@@ -1,6 +1,9 @@
 <template>
   <div>
     <loading :active.sync="isLoading" />
+
+    <ResumeList />
+
     <header>
       <div class="d-flex d-flex justify-content-evenly align-items-center month">
         <div class="">
@@ -19,22 +22,21 @@
     <p v-show="emptyFilteredTransaction && !isLoading">Nenhuma transação encontrada para "{{ query }}".</p>
     <p v-show="emptyTransaction && !isLoading">Nenhuma transação encontrada.</p>
 
-    <CreateTransactionFormModal ref="form-modal" />
-
-    <!-- <fab-item color="green" @clickItem="showCreateTransactionFormModal" :idx="0" title="Receita" class="bi bi-plus-lg" /> -->
+    <TransactionFormModal ref="form-modal" />
 
     <vue-fab
       :mainBtnColor="mainBtnColor"
       :icon="mainBtnIcon"
       :size="mainBtnSize"
       :scrollAutoHide="false"
+      :class="mainBtnClass"
     >
       <fab-item v-for="(item, idx) in menu" :key="idx"
         :idx="idx"
         :title="item.title"
         :color="item.color"
         :icon="item.icon"
-        @clickItem="showCreateTransactionFormModal(item.transactionType)"
+        @clickItem="openTransactionFormModal(null, item.transactionType)"
       />
     </vue-fab>
   </div>
@@ -44,8 +46,9 @@
 import Loading from 'vue-loading-overlay'
 import { mapActions, mapGetters } from 'vuex'
 import AlertService from '@helpers/AlertService'
+import ResumeList from '../List/ResumeList'
 import TransactionList from '../List/TransactionList'
-import CreateTransactionFormModal from '../Modals/CreateTransactionFormModal'
+import TransactionFormModal from '../Modals/TransactionFormModal'
 import {
   TRANSACTION_TYPE,
   TRANSACTION_STORE_CONSTANTS as C
@@ -55,13 +58,14 @@ export default {
   name: 'TransactionListWrapper',
   components: {
     Loading,
+    ResumeList,
     TransactionList,
-    CreateTransactionFormModal
+    TransactionFormModal
   },
   computed: {
     ...mapGetters(C.MODULE_NAME, {
       transactionList: C.GETTERS.GET_LIST,
-      isLoading: C.GETTERS.LIST_IS_LOADING
+      isLoading: C.GETTERS.IS_LOADING
     }),
     emptyTransaction () {
       return !this.transactionList.length > 0 && !this.query
@@ -71,9 +75,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(C.MODULE_NAME, ['loadTransactionList']),
+    ...mapActions(C.MODULE_NAME, ['loadTransactions']),
     loadTransaction (initialDate, finalDate = null, query = null) {
-      this.loadTransactionList({ initialDate, finalDate, query }).catch(error => {
+      this.loadTransactions({ initialDate, finalDate, query }).catch(error => {
         console.warn(error)
         AlertService.error({})
       })
@@ -81,8 +85,8 @@ export default {
     filteredTransactionList (query) {
       this.loadTransaction(query)
     },
-    showCreateTransactionFormModal (transactionType) {
-      this.$refs['form-modal'].show(transactionType)
+    openTransactionFormModal (transaction, transactionType) {
+      this.$refs['form-modal'].open(transaction, transactionType)
     }
   },
   data () {
@@ -115,11 +119,18 @@ export default {
           title: 'Transferência',
           color: '#356B8D',
           transactionType: TRANSACTION_TYPE.TRANSFER
+        },
+        {
+          icon: 'fs-5 bi bi-record-circle',
+          title: 'Objetivo',
+          color: '#EB8F66',
+          transactionType: TRANSACTION_TYPE.OBJECTIVE
         }
       ],
       mainBtnColor: '#356B8D',
       mainBtnIcon: 'fs-4 bi bi-plus-lg',
-      mainBtnSize: 'big'
+      mainBtnSize: 'big',
+      mainBtnClass: 'btn-float'
     }
   },
   created () {
@@ -142,9 +153,5 @@ export default {
     left: 50%;
     position: relative;
     transform: translateX(-50%);
-  }
-
-  .fab-item {
-    padding-top: 10px;
   }
 </style>

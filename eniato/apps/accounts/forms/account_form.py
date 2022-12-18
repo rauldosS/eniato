@@ -37,7 +37,7 @@ class AccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('financial_institution', 'description', 'opening_balance', 'account_type', 'default', 'include_on_dashboard', 'color')
+        fields = ('financial_institution', 'description', 'opening_balance', 'account_type', 'default', 'color')
 
         widgets = {
             'color': forms.HiddenInput(),
@@ -74,7 +74,6 @@ class AccountForm(forms.ModelForm):
     ])
 
     default = forms.BooleanField(required=False)
-    include_on_dashboard = forms.BooleanField(required=False)
     color = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def clean_financial_institution(self):
@@ -94,8 +93,7 @@ class AccountForm(forms.ModelForm):
     #         'description',
     #         'account_type',
     #         'color',
-    #         'default',
-    #         'include_on_dashboard',
+    #         'default'
     #     )
 
     #     widgets = {

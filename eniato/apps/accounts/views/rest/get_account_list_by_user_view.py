@@ -9,5 +9,4 @@ class GetAccountListByUserView(ListAPIView):
     serializer_class = AccountSerializer
 
     def get_queryset(self):
-        accounts = self.repository.get_by_user(self.request.user)
-        return accounts
+        return self.repository.get_by_user(self.request.user)

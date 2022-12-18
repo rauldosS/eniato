@@ -13,7 +13,14 @@ class TransactionRepository(BaseRepository):
         self.factory = factory or TransactionFactory()
 
     def update_daily_balance(self, domain, daily_balance):
-        return self.model.stored.filter(id=domain.id).update(daily_balance_id=daily_balance.id)
+        self.model.stored.filter(id=domain.id).update(daily_balance_id=daily_balance.id)
+
+    def get_by_account(self, account_id):
+        transactions = self.model.stored.filter(account=account_id).order_by('-transaction_date')
+        return [
+            self.factory.create_from_model(transaction)
+            for transaction in transactions
+        ]
 
     def create(self, domain):
         model = self.model.stored.create(

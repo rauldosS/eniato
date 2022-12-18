@@ -10,21 +10,44 @@ export const AccountStore = {
     accountList: []
   },
   getters: {
-    [C.GETTERS.GET_ACCOUNT_LIST] ({ accountList }) {
+    [C.GETTERS.IS_LOADING] ({ loading }) {
+      return loading
+    },
+    [C.GETTERS.GET_LIST] ({ accountList }) {
       return accountList.map(c => c.toDTO())
     }
   },
   actions: {
-    async [C.ACTIONS.LOAD_ACCOUNT_LIST] ({ commit }) {
-      await accountRepository.getAccountList().then(
-        (accountList) => {
-          commit(C.MUTATIONS.SET_ACCOUNT_LIST, accountList)
-        }
-      )
+    async loadAccounts ({ commit }) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      await accountRepository.getAccountList().then(accountList => {
+        commit(C.MUTATIONS.SET_LIST, accountList)
+      }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
+    },
+    async save ({ commit, dispatch }, form) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      return accountRepository.save(form).then(() => {
+        dispatch('loadAccountList')
+      }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
+    },
+    async delete ({ commit, dispatch }, account) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      return accountRepository.delete(account).then(() => {
+        dispatch('loadAccountList')
+      }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
     }
   },
   mutations: {
-    [C.MUTATIONS.SET_ACCOUNT_LIST] (state, accountList) {
+    [C.MUTATIONS.SET_LOADING] (state, status) {
+      state.loading = status
+    },
+    [C.MUTATIONS.SET_LIST] (state, accountList) {
       state.accountList = accountList
     }
   }

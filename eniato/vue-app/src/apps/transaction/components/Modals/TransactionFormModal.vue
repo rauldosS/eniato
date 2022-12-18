@@ -1,23 +1,23 @@
 <template>
   <b-modal
-    ref="form-modal"
+    ref="transaction-form-modal"
     title="Nova Transação"
     ok-title="Fechar"
     @ok="hide"
     @close="hide"
-    size="lg"
+    size="md"
     centered
   >
-    <CreateTransactionForm
+    <SimpleTransactionForm
       :transactionType="transactionType"
       class="mx-4"
       ref="create-transaction-form"
+      v-if="[transactionTypes.INCOME, transactionTypes.EXPENSE].includes(transactionType)"
     />
     <template v-slot:modal-footer>
       <button @click="hide" class="button alternative-button">Fechar</button>
       <button
         type="submit"
-        form="change-responsible-for-the-task-form"
         class="button primary-button"
         @click.prevent="save"
       >
@@ -28,29 +28,34 @@
 </template>
 
 <script>
-import CreateTransactionForm from '../Forms/CreateTransactionForm'
+import SimpleTransactionForm from '../Forms/SimpleTransactionForm'
+import { TRANSACTION_TYPE } from '@transaction/constants'
 
 export default {
-  props: {
-  },
   components: {
-    CreateTransactionForm
+    SimpleTransactionForm
   },
   methods: {
-    show (transactionType) {
+    open (transaction, transactionType) {
+      this.transaction = transaction
       this.transactionType = transactionType
-      this.$refs['form-modal'].show()
+      this.show()
+    },
+    show () {
+      this.$refs['transaction-form-modal'].show()
     },
     hide () {
-      this.$refs['form-modal'].hide()
+      this.$refs['transaction-form-modal'].hide()
     },
     save () {
-      this.$refs['create-transaction-form'].tryToSubmit().then(valid => valid ? this.hide() : null)
+      this.$refs['transaction-form'].tryToSubmit().then(valid => valid ? this.hide() : null)
     }
   },
   data () {
     return {
-      transactionType: null
+      transaction: null,
+      transactionType: null,
+      transactionTypes: TRANSACTION_TYPE
     }
   }
 }

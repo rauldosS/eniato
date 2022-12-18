@@ -50,14 +50,14 @@
 }
 
 html, body {
-    margin: 2rem 0 0 0;
+    margin: 3rem 0 0 0 !important;
     padding: 0;
-    height: 100%;
+    height: calc(100% - 109px) !important;
 }
 
 @media screen and (min-width: 767px) {
     html, body {
-        margin: 4rem 0 0 0;
+        margin: 4rem 0 0 0 !important;
         padding: 0;
         height: 100%;
     }    
@@ -109,6 +109,19 @@ input[type=number]:focus,
     font-family: 'Lato', sans-serif !important;
     font-weight: 600 !important;
     font-size: 36px;
+}
+
+.container-centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    text-align: center;
+}
+
+.container-centered h1, .container-centered h3 {
+    color: #666B7D;
 }
 
 .logo-financial-institution {
@@ -234,6 +247,17 @@ input[type=number]:focus,
 .petrel { background-color: var(--petrel) }
 .primer { background-color: var(--primer) }
 
+.btn-purple {
+    background-color: var(--purple);
+    color: var(--bright-color);
+}
+
+.btn-purple:hover {
+    background-color: var(--purple);
+    opacity: .8;
+    color: var(--bright-color);
+}
+
 .color.activate::before {
     content: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" color="white" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
     position: relative;
@@ -246,8 +270,11 @@ input[type=number]:focus,
     opacity: 1;
 }
 
-.float{
+.btn-float {
 	position: fixed;
+    display: flex;
+    align-items: center!important;
+    justify-content: center !important;
 	width: 60px;
 	height: 60px;
 	bottom: 90px;
@@ -260,8 +287,9 @@ input[type=number]:focus,
     z-index: 99;
 }
 
-a.float:hover {
-    color: #FFF;
+.btn-float svg {
+    font-size: 2.5rem!important;
+    color: var(--bright-color);
 }
 
 .input-decoration-none {
@@ -437,6 +465,11 @@ a.float:hover {
     display: flex;
     justify-content: space-between;
     height: fit-content;
+}
+
+header h1 {
+    padding: 12px 0;
+    text-align: center !important;
 }
 
 .burger-button {
@@ -777,6 +810,16 @@ a.float:hover {
     border-color: var(--primary-color);
 }
 
+.danger-button, .danger-button:disabled:hover {
+    background-color: var(--danger);
+    border: 2px solid var(--danger);
+}
+
+.danger-button:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
 .secondary-button, .secondary-button:disabled:hover {
     background-color: var(--secondary-color);
     border: 2px solid var(--secondary-color);
@@ -823,7 +866,7 @@ a.float:hover {
     fill: var(--highlight-color);
 }
 
-.primary-button:hover, .secondary-button:hover, .highlight-button:hover, .alternative-button:hover {
+.primary-button:hover, .danger-button:hover, .secondary-button:hover, .highlight-button:hover, .alternative-button:hover {
     background-color: #fff;
 }
 
@@ -1034,6 +1077,15 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     border: 1px solid rgba(0,0,0,.25) !important;
 }
 
+.form-switch {
+    display: flex;
+    justify-content: space-between!important;
+    width: calc(100% - 44px) !important;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
 .custom-dropdown-menu {
     border: 0;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
@@ -1185,19 +1237,6 @@ textarea.form-control,
     border-radius: 8px;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-}
-
-.custom-control-input:disabled:checked ~ .custom-control-label::before {
-    background-color: var(--secondary-color-light) !important;
-}
-
-.custom-vue-tree .vue-treeselect__control-arrow {
-    fill: var(--secondary-color);
-}
-
 .custom-radio .custom-control-input:checked ~ .custom-control-label::after {
     background-image: none;
 }
@@ -1214,6 +1253,18 @@ textarea.form-control,
 
 .custom-select, .custom-select.is-invalid {
     background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 292.362 292.362' %3e%3cpath fill='%2343ada5' d='M286.935 69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952 0-9.233 1.807-12.85 5.424C1.807 72.998 0 77.279 0 82.228c0 4.948 1.807 9.229 5.424 12.847l127.907 127.907c3.621 3.617 7.902 5.428 12.85 5.428s9.233-1.811 12.847-5.428L286.935 95.074c3.613-3.617 5.427-7.898 5.427-12.847 0-4.948-1.814-9.229-5.427-12.85z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+}
+
+.custom-vue-tree {
+    width: calc(100% - 44px) !important;
+}
+
+.vue-treeselect__control {
+    margin-top: 0px !important;
+}
+
+.vue-treeselect__input {
+    border-bottom: none !important;
 }
 
 .custom-select:disabled {
@@ -1336,6 +1387,12 @@ textarea.form-control,
     margin-top: 0.25rem;
     font-size: 80%;
     color: var(--warning);
+}
+
+.fab-item {
+    /* padding-top: 10px; */
+    border-radius: 8px !important;
+    margin-left: 25% !important;
 }
 
 .fab[data-v-4d15b73e] {

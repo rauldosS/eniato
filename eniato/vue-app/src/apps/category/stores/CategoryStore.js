@@ -10,21 +10,21 @@ export const CategoryStore = {
     categoryList: []
   },
   getters: {
-    [C.GETTERS.GET_CATEGORY_LIST] ({ categoryList }) {
+    [C.GETTERS.GET_LIST] ({ categoryList }) {
       return categoryList.map(c => c.toDTO())
     }
   },
   actions: {
-    async [C.ACTIONS.LOAD_CATEGORY_LIST] ({ commit }, transactionType) {
+    async [C.ACTIONS.LOAD_LIST] ({ commit }, transactionType) {
       await categoryRepository.getCategoriesByTransactionType(transactionType).then(
         (categoryList) => {
-          commit(C.MUTATIONS.SET_CATEGORY_LIST, categoryList)
+          commit(C.MUTATIONS.SET_LIST, categoryList)
         }
       )
     }
   },
   mutations: {
-    [C.MUTATIONS.SET_CATEGORY_LIST] (state, categoryList) {
+    [C.MUTATIONS.SET_LIST] (state, categoryList) {
       state.categoryList = categoryList
     }
   }

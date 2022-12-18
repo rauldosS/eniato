@@ -1,23 +1,5 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Bem-vindo {{ request.user.first_name }}</h1>
-        <p class="lead">Utilize os atalhos para facilitar a sua vida.</p>
-    </div>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col">
-            <a href="{% url 'category:home' %}" class="card-link">
-                <div class="card h-100">
-                <img src="https://www.yourmoney.com/wp-content/uploads/sites/3/2022/07/moneysavingapps.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Categorias</h5>
-                    <p class="card-text">Cadastre suas categorias para organizar suas despesas e receitas.</p>
-                </div>
-            </div>
-            </a>
-        </div>
-    </div>
-</div>
+<index />
 {% endblock %}

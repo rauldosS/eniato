@@ -32,7 +32,7 @@ from apps.core import views as myapp_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('contas/', include((accounts_urls, 'accounts'), namespace='accounts')),
-    path('categoria/', include((category_urls, 'category'), namespace='category')),
+    path('categorias/', include((category_urls, 'category'), namespace='category')),
     path('transacoes/', include((transaction_urls, 'transaction'), namespace='transaction')),
     path('accounts/', include('allauth.urls')),
     path('', include((core_urls, 'core'), namespace='core')),

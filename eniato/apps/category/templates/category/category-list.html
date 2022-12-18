@@ -30,7 +30,7 @@
     </div>
 
     <div>
-        <table class="table table-striped table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">Nome</th>
@@ -42,9 +42,9 @@
             <tbody>
                 {% for category in categories %}
                 <tr class="filter-category {{ category.category_type }}">
-                    <th>{{ category.name }}</th>
+                    <th class="fw-normal">{{ category.name }}</th>
                     <td>
-                        <i class="bi {{ category.icon }}"></i>
+                        <i class="bi bi-{{ category.icon }}"></i>
                     </td>
                     <td>
                         <div class="color {{ category.color }}"></div>

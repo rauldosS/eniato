@@ -1,5 +1,7 @@
 <template>
-  <div id="create-transaction-form">
+  <div id="transaction-form">
+    <loading :active.sync="accountsLoading" />
+    loading {{ accountsLoading }}
     <b-input-group size="sm" class="mb-2">
       <b-input-group-prepend is-text>
         <b-icon icon="calculator" variant="grey" scale="1.2"></b-icon>
@@ -26,7 +28,7 @@
 
     <b-input-group size="sm" class="mb-2">
       <b-input-group-prepend is-text>
-        <b-icon icon="file-earmark" variant="grey" scale="1.2"></b-icon>
+        <b-icon icon="card-text" variant="grey" scale="1.2"></b-icon>
       </b-input-group-prepend>
       <b-form-input
         type="text"
@@ -89,8 +91,8 @@
         :key="account.id"
         @click="selectAccount(account)"
       >
-         <img :src="account.financialInstitution.logo" class="logo-financial-institution-sm">
-         <div class="ms-1">{{ account.description }}</div>
+        <img :src="account.financialInstitution.logo" class="logo-financial-institution-sm">
+        <div class="ms-1">{{ account.description }}</div>
       </b-dropdown-item-button>
     </b-dropdown>
 
@@ -103,36 +105,35 @@
         <input class="form-check-input" type="checkbox" role="switch" id="ignore" v-model="form.ignore">
       </div>
     </b-input-group>
-
-    <div class="d-flex justify-content-center">
-      <b-button pill variant="primary">
-        Menos detalhes <b-icon icon="caret-up" variant="white"></b-icon>
-      </b-button>
-    </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import Loading from 'vue-loading-overlay'
+import { mapActions, mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
-// import Loading from 'vue-loading-overlay'
 import AlertService from '@helpers/AlertService'
 import { ACCOUNT_STORE_CONSTANTS } from '@account/constants'
 import { CATEGORY_STORE_CONSTANTS } from '@category/constants'
 import { TRANSACTION_STORE_CONSTANTS as C } from '@transaction/constants'
 
 export default {
-  name: 'CreateTransactionForm',
-  components: {
-  },
+  name: 'SimpleTransactionForm',
   mixins: [validationMixin],
+  components: { Loading },
   props: {
     transactionType: String
   },
   computed: {
-    ...mapState(ACCOUNT_STORE_CONSTANTS.MODULE_NAME, ['accountList']),
-    ...mapState(CATEGORY_STORE_CONSTANTS.MODULE_NAME, ['categoryList']),
+    ...mapGetters(ACCOUNT_STORE_CONSTANTS.MODULE_NAME, {
+      accountList: ACCOUNT_STORE_CONSTANTS.GETTERS.GET_LIST,
+      accountsLoading: ACCOUNT_STORE_CONSTANTS.GETTERS.IS_LOADING
+    }),
+    ...mapGetters(CATEGORY_STORE_CONSTANTS.MODULE_NAME, {
+      categoryList: CATEGORY_STORE_CONSTANTS.GETTERS.GET_LIST,
+      categoriesLoading: CATEGORY_STORE_CONSTANTS.GETTERS.IS_LOADING
+    }),
     expectedTransaction () {
       const expectedTransaction = new Date(this.form.transactionDate) >= this.today
       this.changeStatus(expectedTransaction)
@@ -141,11 +142,9 @@ export default {
   },
   methods: {
     ...mapActions(C.MODULE_NAME, ['save']),
-    ...mapActions(ACCOUNT_STORE_CONSTANTS.MODULE_NAME, {
-      loadAccounts: ACCOUNT_STORE_CONSTANTS.ACTIONS.LOAD_ACCOUNT_LIST
-    }),
+    ...mapActions(ACCOUNT_STORE_CONSTANTS.MODULE_NAME, ['loadAccounts']),
     ...mapActions(CATEGORY_STORE_CONSTANTS.MODULE_NAME, {
-      loadCategories: CATEGORY_STORE_CONSTANTS.ACTIONS.LOAD_CATEGORY_LIST
+      loadCategories: CATEGORY_STORE_CONSTANTS.ACTIONS.LOAD_LIST
     }),
     selectCategory (category) {
       this.form.category = category.id
@@ -230,14 +229,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.form-switch {
-  display: flex;
-  justify-content: space-between!important;
-  width: calc(100% - 44px) !important;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-</style>

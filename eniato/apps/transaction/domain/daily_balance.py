@@ -32,15 +32,17 @@ class DailyBalance:
         else:
             self.expected_balance += transaction.value_for_transaction_type
 
-    def update_balance(self, transaction):
+    def update_balance(self, transaction, delete_transaction=False):
+        value = transaction.value if delete_transaction else transaction.value * -1
+
         if transaction.transaction_type == TransactionType.INCOME.value:
-            self.set_income(transaction.value) if transaction.status else self.set_expected_income(transaction.value)
+            self.set_income(value) if transaction.status else self.set_expected_income(value)
 
         if transaction.transaction_type == TransactionType.EXPENSE.value:
-            self.set_expense(transaction.value) if transaction.status else self.set_expected_expense(transaction.value)
+            self.set_expense(value) if transaction.status else self.set_expected_expense(value)
 
         if transaction.transaction_type == TransactionType.CREDIT.value:
-            self.set_credit(transaction.value) if transaction.status else self.set_expected_credit(transaction.value)
+            self.set_credit(value) if transaction.status else self.set_expected_credit(value)
 
         self.balance = self.income - (self.expense + self.credit)
         self.expected_balance = (self.expected_income + self.balance) - (self.expected_expense + self.expected_credit)

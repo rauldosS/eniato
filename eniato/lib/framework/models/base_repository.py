@@ -42,13 +42,10 @@ class BaseRepository(abc.ABC):
         return self.domain_object.create_from_model(item)
 
     def _build_domain(self, qs):
-        if self.factory:
-            for domain_object in self.factory.build_from_queryset(qs):
-                yield domain_object
-
-        if self.domain_object:
-            for item in qs:
-                yield self.domain_object.create_from_model(item)
+        return [self.factory.create_from_model(model) for model in qs]
 
     def _get_queryset(self):
         return self.model.stored.all()
+
+    def delete_by_id(self, id):
+        return self.model.stored.get(id=id).delete()
