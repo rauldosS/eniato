@@ -47,7 +47,7 @@
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <p class="text-muted">Saldo atual</p>
-          <p class="text-muted" v-text="maskMoney(account.openingBalance)"></p>
+          <p class="text-muted" v-text="currencyFormat(account.openingBalance)"></p>
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <p class="text-muted">Tipo de conta</p>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Mask from '@helpers/Mask'
+import Formatter from '@helpers/Formatter'
 
 export default {
   name: 'AccountCard',
@@ -70,8 +70,8 @@ export default {
   },
   props: ['account'],
   methods: {
-    maskMoney (money) {
-      return Mask.money(money)
+    currencyFormat (money) {
+      return Formatter.currency(money)
     },
     openAccountFormModal (account) {
       this.$emit('open-account-modal-form', account)

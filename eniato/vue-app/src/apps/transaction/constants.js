@@ -8,7 +8,8 @@ export const TRANSACTION_TYPE = {
   INCOME: 'income',
   EXPENSE: 'expense',
   CREDIT: 'credit',
-  TRANSFER: 'transfer'
+  TRANSFER: 'transfer',
+  OBJECTIVE: 'objective'
 }
 
 export const TRANSACTION_STORE_CONSTANTS = {
@@ -22,5 +23,17 @@ export const TRANSACTION_STORE_CONSTANTS = {
     SET_LOADING: 'SET_LOADING',
     SET_TRANSACTION: 'SET_TRANSACTION',
     SET_LIST: 'SET_LIST'
+  }
+}
+
+export const TRANSACTION_SUMMARY_STORE_CONSTANTS = {
+  MODULE_NAME: 'TransactionSummaryStore',
+  GETTERS: {
+    IS_LOADING: 'IS_LOADING',
+    GET_TRANSACTION_SUMMARY: 'GET_TRANSACTION_SUMMARY'
+  },
+  MUTATIONS: {
+    SET_LOADING: 'SET_LOADING',
+    SET_TRANSACTION_SUMMARY: 'SET_TRANSACTION_SUMMARY'
   }
 }

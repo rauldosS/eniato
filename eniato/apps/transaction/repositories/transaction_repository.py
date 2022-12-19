@@ -22,6 +22,21 @@ class TransactionRepository(BaseRepository):
             for transaction in transactions
         ]
 
+    def get_by_query_params(self, user, query_params):
+        queryset = self.model.stored.filter(
+            reference_date__range=[query_params['initial_date'], query_params['final_date']],
+            user=user
+        ).prefetch_related(
+            'transaction_set'
+        )
+
+        print('repository', queryset)
+
+        return [
+            self.factory.create_from_model(daily_balance, map_transactions=True)
+            for daily_balance in queryset
+        ]
+
     def create(self, domain):
         model = self.model.stored.create(
             category_id=domain.category.id,

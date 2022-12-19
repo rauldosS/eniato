@@ -1,5 +1,5 @@
-import TransactionListWrapper from './Wrappers/TransactionListWrapper'
+import TransactionSummaryWrapper from './Wrappers/TransactionSummaryWrapper'
 
 export default {
-  'transaction-list': TransactionListWrapper
+  'transaction-summary': TransactionSummaryWrapper
 }

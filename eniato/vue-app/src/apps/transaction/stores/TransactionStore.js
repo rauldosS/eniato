@@ -23,14 +23,6 @@ export const TransactionStore = {
     }
   },
   actions: {
-    async loadTransactions ({ commit }, { initialDate, finalDate, query }) {
-      commit(C.MUTATIONS.SET_LOADING, true)
-      return transactionRepository.getTransactionList(initialDate, finalDate, query).then(transactionList => {
-        commit(C.MUTATIONS.SET_LIST, transactionList)
-      }).finally(() => {
-        commit(C.MUTATIONS.SET_LOADING, false)
-      })
-    },
     async save ({ commit }, form) {
       commit(C.MUTATIONS.SET_LOADING, true)
       return transactionRepository.saveForm(form).then(event => {

@@ -22,8 +22,8 @@
         :class="transaction.isExpense
           ? 'text-danger fw-bold'
           : 'text-success fw-bold'"
+        v-text="currencyFormat(transaction.value)"
       >
-        R$ {{ transaction.value }}
       </h4>
       <div class="d-flex align-items-center justify-content-center">
         <b-badge pill class="text-muted" :variant="transaction.status ? 'light-sucess' : 'light-danger'" v-text="transaction.status ? 'Pago' : 'Não pago'"></b-badge>
@@ -42,6 +42,7 @@
 <script>
 import TransactionDetailModal from '../Modals/TransactionDetailModal'
 import TransactionCategoryCircleFillIcon from '../Icons/TransactionCategoryCircleFillIcon'
+import Formatter from '@helpers/Formatter'
 
 export default {
   name: 'TransactionCard',
@@ -51,6 +52,9 @@ export default {
   },
   props: ['transaction'],
   methods: {
+    currencyFormat (money) {
+      return Formatter.currency(money)
+    },
     openTransactionDetailModal () {
       this.$refs['transaction-detail-modal'].show()
     }

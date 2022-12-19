@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from lib.framework.models.base_repository import BaseRepository
 
 from apps.transaction.factories.daily_balance_factory import DailyBalanceFactory
@@ -16,6 +18,8 @@ class DailyBalanceRepository(BaseRepository):
         queryset = self.model.stored.filter(
             reference_date__range=[query_params['initial_date'], query_params['final_date']],
             user=user
+        ).order_by(
+            'reference_date'
         ).prefetch_related(
             'transaction_set'
         )
@@ -39,10 +43,14 @@ class DailyBalanceRepository(BaseRepository):
                 self.factory.create_from_previous_daily_balance(reference_date, previous_daily_balance)
             )
 
-    def get_previous_daily_balance(self, reference_date):
+    def get_previous_daily_balance(self, user, reference_date, same_day=False):
         try:
-            previous_daily_balance = self.model.stored.filter(reference_date__lt=reference_date).latest('reference_date')
-            return self.factory.create_from_previous_daily_balance(reference_date, previous_daily_balance)
+            model = self.model.stored.filter(user=user)
+            if same_day:
+                model = model.filter(reference_date__lte=reference_date).latest('reference_date')
+            else:
+                model = model.filter(reference_date__lt=reference_date).latest('reference_date')
+            return self.factory.create_from_model(model, map_transactions=True)
         except self.model.DoesNotExist:
             return self.factory.create_from_data({ 'reference_date': reference_date })
 
@@ -52,6 +60,19 @@ class DailyBalanceRepository(BaseRepository):
             self.factory.create_from_model(daily_balance)
             for daily_balance in months_balance
         ]
+
+    def get_totals_by_period(self, user, initial_date, final_date):
+        return self.model.stored.filter(
+            reference_date__range=[initial_date, final_date],
+            user=user
+        ).aggregate(
+            total_income=Sum('income'),
+            total_expense=Sum('expense'),
+            balance=Sum('income') - Sum('expense'),
+            total_expected_income=Sum('expected_income'),
+            total_expected_expense=Sum('expected_expense'),
+            expected_balance=Sum('expected_income') - Sum('expected_expense')
+        )
 
     def save(self, domain):
         model, created = self.model.stored.update_or_create(

@@ -7,30 +7,6 @@ export default class TransactionRepository {
     this.baseUri = baseUri || URLS.BASE_TRANSACTION_REST_URL
   }
 
-  async getTransactionList (
-    initialDate,
-    finalDate,
-    status = null,
-    category_id = null,
-    account_id = null,
-    query = null
-  ) {
-    const params = {}
-
-    params.initialDate = initialDate.toISOString().slice(0, 10)
-    params.finalDate = finalDate.toISOString().slice(0, 10)
-
-    if (query) {
-      params.query = query
-    }
-
-    const uri = `${this.baseUri}/${URLS.GET_TRANSACTION_LIST_FOR_AUTHENTICATED_USER_URL}`
-    return this.requester.get(uri, { params }).then(({ data: dtoList }) => {
-      return dtoList
-      // return dtoList.map(dto => this.factory.buildFromDTO(dto))
-    })
-  }
-
   async saveForm (data) {
     const uri = `${this.baseUri}/${URLS.CREATE_TRANSACTION_FORM_URL}`
     const form = {
@@ -51,7 +27,6 @@ export default class TransactionRepository {
     }
 
     return this.requester.post(uri, form).then(({ data: dto }) => {
-      console.log(dto)
       return dto
     })
   }

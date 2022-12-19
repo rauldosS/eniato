@@ -7,13 +7,16 @@ from apps.transaction.models.store import Store
 from apps.transaction.models.tag import Tag
 from apps.transaction.models.recurrence import Recurrence
 
-
 from apps.accounts.models.account import Account
 
 from apps.transaction.constants import TransactionType
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Transaction(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Usuário')
     daily_balance = models.ForeignKey(DailyBalance, on_delete=models.CASCADE, verbose_name='Balanço diário', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_transaction')
 

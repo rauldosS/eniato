@@ -2,7 +2,10 @@
   <div>
     <loading :active.sync="isLoading" />
 
-    <ResumeList />
+    <SummaryHeaderCard
+      v-show="transactionSummary"
+      :transaction-summary="transactionSummary"
+    />
 
     <header>
       <div class="d-flex d-flex justify-content-evenly align-items-center month">
@@ -17,10 +20,12 @@
     </header>
 
     <TransactionList
-      :transaction-list="transactionList"
+      :transaction-summary="transactionSummary"
     />
-    <p v-show="emptyFilteredTransaction && !isLoading">Nenhuma transação encontrada para "{{ query }}".</p>
-    <p v-show="emptyTransaction && !isLoading">Nenhuma transação encontrada.</p>
+    <!-- transactionSummary.dailyBalances -->
+
+    <!-- <p v-show="emptyFilteredTransaction && !isLoading">Nenhuma transação encontrada para "{{ query }}".</p> -->
+    <!-- <p v-show="emptyTransaction && !isLoading">Nenhuma transação encontrada para o período.</p> -->
 
     <TransactionFormModal ref="form-modal" />
 
@@ -46,44 +51,46 @@
 import Loading from 'vue-loading-overlay'
 import { mapActions, mapGetters } from 'vuex'
 import AlertService from '@helpers/AlertService'
-import ResumeList from '../List/ResumeList'
+import SummaryHeaderCard from '../Cards/SummaryHeaderCard'
 import TransactionList from '../List/TransactionList'
 import TransactionFormModal from '../Modals/TransactionFormModal'
 import {
   TRANSACTION_TYPE,
-  TRANSACTION_STORE_CONSTANTS as C
+  TRANSACTION_SUMMARY_STORE_CONSTANTS as C
 } from '@transaction/constants'
 
 export default {
   name: 'TransactionListWrapper',
   components: {
     Loading,
-    ResumeList,
+    SummaryHeaderCard,
     TransactionList,
     TransactionFormModal
   },
   computed: {
     ...mapGetters(C.MODULE_NAME, {
-      transactionList: C.GETTERS.GET_LIST,
+      transactionSummary: C.GETTERS.GET_TRANSACTION_SUMMARY,
       isLoading: C.GETTERS.IS_LOADING
     }),
     emptyTransaction () {
-      return !this.transactionList.length > 0 && !this.query
+      return this.transactionSummary ? !this.transactionSummary.dailyBalances.length > 0 && !this.query : false
     },
     emptyFilteredTransaction () {
-      return !this.transactionList.length > 0 && this.query.length > 0
+      return this.transactionSummary ? !this.transactionSummary.dailyBalances.length > 0 && this.query.length > 0 : null
     }
   },
   methods: {
-    ...mapActions(C.MODULE_NAME, ['loadTransactions']),
+    ...mapActions(C.MODULE_NAME, ['loadTransactionSummary']),
     loadTransaction (initialDate, finalDate = null, query = null) {
       this.loadTransactions({ initialDate, finalDate, query }).catch(error => {
         console.warn(error)
         AlertService.error({})
       })
     },
-    filteredTransactionList (query) {
-      this.loadTransaction(query)
+    filteredTransactionSummary (query) {
+      // this.resetExamRequestList()
+      // if (filterQuery) this.loadExamRequest(this.profile, this.campaignId, null, filterQuery)
+      this.loadTransactionSummary(query)
     },
     openTransactionFormModal (transaction, transactionType) {
       this.$refs['form-modal'].open(transaction, transactionType)
@@ -138,7 +145,7 @@ export default {
     this.initialDate = new Date(date.getFullYear(), date.getMonth(), 1)
     this.finalDate = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
-    this.loadTransaction(this.initialDate, this.finalDate)
+    this.loadTransactionSummary({ initialDate: this.initialDate, finalDate: this.finalDate })
   }
 }
 </script>
