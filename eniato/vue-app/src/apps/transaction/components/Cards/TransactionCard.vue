@@ -4,6 +4,7 @@
       <TransactionCategoryCircleFillIcon
         :transactionType="transaction.transactionType"
         :icon="transaction.category.icon"
+        :variant="transaction.category.color"
         size="lg"
       />
     </div>
@@ -11,9 +12,9 @@
       <h3 class="fw-bold">
         {{ transaction.description }}
       </h3>
-      <div class="">
-        <b-icon :icon="transaction.category.icon"></b-icon> {{ transaction.category.name }}
-        <span>| {{ transaction.account.name }} </span>
+      <div>
+        <img class="logo-financial-institution-sm" :src="transaction.account.financialInstitution.logo" /> {{ transaction.category.name }}
+        <span>{{ transaction.account.name }}</span>
         <span v-if="transaction.fixed">| Fixa</span>
       </div>
     </div>
@@ -35,6 +36,8 @@
     <TransactionDetailModal
       ref="transaction-detail-modal"
       :transaction="transaction"
+      @open-transaction-modal-form="openTransactionFormModal"
+      @reload-transacton-summary="reloadTransactionSummary"
     />
   </div>
 </template>
@@ -56,7 +59,13 @@ export default {
       return Formatter.currency(money)
     },
     openTransactionDetailModal () {
-      this.$refs['transaction-detail-modal'].show()
+      this.$refs['transaction-detail-modal'].open(this.transaction)
+    },
+    openTransactionFormModal () {
+      this.$emit('open-transaction-form-modal', this.transaction)
+    },
+    reloadTransactionSummary () {
+      this.$emit('reload-transaction-summary')
     }
   }
 }

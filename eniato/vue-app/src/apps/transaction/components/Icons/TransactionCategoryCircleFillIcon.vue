@@ -1,5 +1,5 @@
 <template>
-  <div :class="`circle-fill circle-fill-${ size } bg-${ isCredit || isTransfer ? transactionType : 'link'}`">
+  <div :class="`circle-fill circle-fill-${ size } bg-link`">
     <CreditCardIcon :width="18" :height="18" :color="'var(--bright-color)'" v-if="isCredit" />
     <RepeatIcon :width="22" :height="22" :color="'var(--bright-color)'" v-else-if="isTransfer" />
     <b-icon :icon="icon" :width="20" :height="20" :color="'var(--bright-color)'" v-else></b-icon>
@@ -31,9 +31,8 @@ export default {
       type: String,
       deafult: 'md'
     },
-    icon: {
-      type: String
-    }
+    icon: String,
+    variant: String
   }
 }
 </script>

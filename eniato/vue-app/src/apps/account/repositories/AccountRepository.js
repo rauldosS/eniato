@@ -25,12 +25,23 @@ export default class accountRepository {
       description: data.description,
       account_type: data.accountType,
       color: data.color,
-      default: data.default
+      default: data.default,
+      active: data.active
     }
 
     return this.requester.post(uri, form).then(({ data: dto }) => {
       return dto
     })
+  }
+
+  async deactivate (account) {
+    const uri = `${this.baseUri}/${URLS.DEACTIVATE_ACCOUNT_URL}`.replace('<account-id>', account.id)
+    return this.requester.post(uri)
+  }
+
+  async activate (account) {
+    const uri = `${this.baseUri}/${URLS.ACTIVE_ACCOUNT_URL}`.replace('<account-id>', account.id)
+    return this.requester.post(uri)
   }
 
   async delete (account) {

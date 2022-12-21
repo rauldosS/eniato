@@ -1,7 +1,7 @@
 <template>
   <b-modal
     ref="transaction-form-modal"
-    title="Nova Transação"
+    :title="modalTitle()"
     ok-title="Fechar"
     @ok="hide"
     @close="hide"
@@ -9,9 +9,10 @@
     centered
   >
     <SimpleTransactionForm
+      :transaction="transaction"
       :transactionType="transactionType"
       class="mx-4"
-      ref="create-transaction-form"
+      ref="transaction-form"
       v-if="[transactionTypes.INCOME, transactionTypes.EXPENSE].includes(transactionType)"
     />
     <template v-slot:modal-footer>
@@ -48,7 +49,18 @@ export default {
       this.$refs['transaction-form-modal'].hide()
     },
     save () {
-      this.$refs['transaction-form'].tryToSubmit().then(valid => valid ? this.hide() : null)
+      this.$refs['transaction-form'].tryToSubmit().then(valid => {
+        if (valid) {
+          this.$emit('loadTransactionSummary')
+          this.hide()
+        }
+        return null
+      })
+    },
+    modalTitle () {
+      const transactionTypeDisplayName = 'Transação'
+      const action = this.transaction ? 'Editar' : 'Nova'
+      return `${action} ${transactionTypeDisplayName}`
     }
   },
   data () {

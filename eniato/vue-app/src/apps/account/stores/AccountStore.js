@@ -18,9 +18,9 @@ export const AccountStore = {
     }
   },
   actions: {
-    async loadAccounts ({ commit }) {
+    async loadAccountList ({ commit }) {
       commit(C.MUTATIONS.SET_LOADING, true)
-      await accountRepository.getAccountList().then(accountList => {
+      return accountRepository.getAccountList().then(accountList => {
         commit(C.MUTATIONS.SET_LIST, accountList)
       }).finally(() => {
         commit(C.MUTATIONS.SET_LOADING, false)
@@ -29,6 +29,22 @@ export const AccountStore = {
     async save ({ commit, dispatch }, form) {
       commit(C.MUTATIONS.SET_LOADING, true)
       return accountRepository.save(form).then(() => {
+        dispatch('loadAccountList')
+      }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
+    },
+    async deactivate ({ commit, dispatch }, account) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      return accountRepository.deactivate(account).then(() => {
+        dispatch('loadAccountList')
+      }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
+    },
+    async activate ({ commit, dispatch }, account) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      return accountRepository.activate(account).then(() => {
         dispatch('loadAccountList')
       }).finally(() => {
         commit(C.MUTATIONS.SET_LOADING, false)

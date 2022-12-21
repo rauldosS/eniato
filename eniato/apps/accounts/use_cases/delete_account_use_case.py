@@ -1,13 +1,11 @@
 from apps.accounts.repositories import AccountRepository
 from apps.transaction.repositories.transaction_repository import TransactionRepository
-from apps.transaction.repositories import DailyBalanceRepository
 
 class DeleteAccountUseCase(object):
 
-    def __init__(self, repository=None, transaction_repository=None, daily_balance_repository=None):
+    def __init__(self, repository=None, transaction_repository=None):
         self.repository = repository or AccountRepository()
         self.transaction_repository = transaction_repository or TransactionRepository()
-        self.daily_balance_repository = daily_balance_repository or DailyBalanceRepository()
 
     def execute(self, account_id):
         transactions = self.transaction_repository.get_by_account(account_id)

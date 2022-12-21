@@ -9,10 +9,7 @@
     centered
   >
     <div>
-      <p>Ao apagar sua conta todas as transações vinculadas à mesma serão deletadas.</p>
-      <p class="text-center">
-        <b>Lembra-se, esta ação é irreversível.</b>
-      </p>
+      <p class="text-center">Ao apagar uma conta, todas as despesas, receitas, cartões e transferências associadas serão apagadas juntamente.</p>
     </div>
     <template v-slot:modal-footer>
       <button @click="hide" class="button alternative-button">Fechar</button>
@@ -20,9 +17,8 @@
         type="submit"
         class="button danger-button"
         @click.prevent="deleteAccount"
-      >
-        Apagar
-      </button>
+        v-text="confirmDelete ? 'CLIQUE PARA CONFIRMAR' : 'Apagar'"
+      ></button>
     </template>
   </b-modal>
 </template>
@@ -45,7 +41,21 @@ export default {
       this.$refs['delete-account-modal'].hide()
     },
     deleteAccount () {
-      this.delete(this.account)
+      if (this.confirmDelete) {
+        this.delete(this.account).then(() => {
+          this.hide()
+        })
+      } else {
+        this.confirmDelete = true
+        setTimeout(() => {
+          this.confirmDelete = false
+        }, 2000)
+      }
+    }
+  },
+  data () {
+    return {
+      confirmDelete: false
     }
   }
 }

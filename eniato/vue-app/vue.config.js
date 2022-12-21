@@ -35,6 +35,7 @@ module.exports = {
         '@account': path.join(__dirname, 'src/apps/account'),
         '@category': path.join(__dirname, 'src/apps/category'),
         '@transaction': path.join(__dirname, 'src/apps/transaction'),
+        '@objective': path.join(__dirname, 'src/apps/objective'),
         '@helpers': path.join(__dirname, 'src/lib/helpers'),
         '@eniato-ui': path.join(__dirname, 'src/lib/components/UI'),
         '@eniato-icons': path.join(__dirname, 'src/lib/icons')

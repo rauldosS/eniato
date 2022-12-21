@@ -3,7 +3,13 @@ export const ENDPOINTS_CONSTANTS = {
   GET_ACCOUNT_LIST_FOR_AUTHENTICATED_USER_URL: 'contas/usuario',
   GET_ALL_FINANCIAL_INSTITUTIONS_URL: 'instituicoes-financeiras',
   SAVE_ACCOUNT_URL: 'salvar',
+  ACTIVE_ACCOUNT_URL: 'ativar/<account-id>',
+  DEACTIVATE_ACCOUNT_URL: 'desativar/<account-id>',
   DELETE_ACCOUNT_URL: 'apagar/<account-id>'
+}
+
+export const ACCOUNT_URLS_CONSTANTS = {
+  ACCOUNT_LIST_URL: '/contas'
 }
 
 export const ACCOUNT_STORE_CONSTANTS = {

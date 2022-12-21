@@ -29,7 +29,8 @@ class SaveAccountUseCase(object):
             'description': form['description'],
             'account_type': form['account_type'],
             'color': form['color'],
-            'default': form['default']
+            'default': form['default'],
+            'active': form['active']
         })
 
         account_domain = self._set_default_account(account_domain, user_domain)

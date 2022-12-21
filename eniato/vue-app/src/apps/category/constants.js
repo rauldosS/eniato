@@ -1,3 +1,4 @@
+export const TRANSACTIO_TYPE_ALL = 'all'
 export const TRANSACTIO_TYPE_INCOME = 'income'
 export const TRANSACTIO_TYPE_EXPENSE = 'expense'
 export const TRANSACTIO_TYPE_CREDIT = 'credit'
@@ -5,6 +6,7 @@ export const TRANSACTIO_TYPE_CREDIT = 'credit'
 export const ENDPOINTS_CONSTANTS = {
   BASE_REST_URL: '/categorias/rest',
   GET_CATEGORY_LIST_BY_TRANSACTION_TYPE_URL: {
+    [TRANSACTIO_TYPE_ALL]: 'categorias/todas',
     [TRANSACTIO_TYPE_INCOME]: 'categorias/receita',
     [TRANSACTIO_TYPE_EXPENSE]: 'categorias/despesa',
     [TRANSACTIO_TYPE_CREDIT]: 'categorias/despesa'

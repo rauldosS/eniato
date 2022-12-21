@@ -7,6 +7,7 @@ export class Account {
     this._currentBalance = attributes.currentBalance
     this._description = attributes.description
     this._accountType = attributes.accountType
+    this._displayAccountType = attributes.displayAccountType
     this._color = attributes.color
     this._default = attributes.default
     this._active = attributes.active
@@ -19,6 +20,7 @@ export class Account {
   get currentBalance () { return this._currentBalance }
   get description () { return this._description }
   get accountType () { return this._accountType }
+  get displayAccountType () { return this._displayAccountType }
   get color () { return this._color }
   get default () { return this._default }
   get active () { return this._active }
@@ -32,6 +34,7 @@ export class Account {
       currentBalance: this._currentBalance,
       description: this._description,
       accountType: this._accountType,
+      displayAccountType: this._displayAccountType,
       color: this._color,
       default: this._default,
       active: this._active

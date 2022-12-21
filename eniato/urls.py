@@ -24,6 +24,7 @@ from apps.core import urls as core_urls
 from apps.accounts import urls as accounts_urls
 from apps.category import urls as category_urls
 from apps.transaction import urls as transaction_urls
+from apps.objective import urls as objective_urls
 
 from apps.core.views import Http404View
 from apps.core import views as myapp_views
@@ -34,6 +35,7 @@ urlpatterns = [
     path('contas/', include((accounts_urls, 'accounts'), namespace='accounts')),
     path('categorias/', include((category_urls, 'category'), namespace='category')),
     path('transacoes/', include((transaction_urls, 'transaction'), namespace='transaction')),
+    path('objetivos/', include((objective_urls, 'objective'), namespace='objective')),
     path('accounts/', include('allauth.urls')),
     path('', include((core_urls, 'core'), namespace='core')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

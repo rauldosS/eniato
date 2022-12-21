@@ -1,10 +1,11 @@
 from typing import Optional
 
+from lib.users.domain import User
 from lib.helpers import local_currency
 
 from apps.category.domain import Category
 from apps.accounts.domain import Account
-from apps.transaction.domain.daily_balance import DailyBalance
+from apps.transaction.domain.recurrence import Recurrence
 
 from apps.transaction.constants import TransactionType
 
@@ -16,24 +17,18 @@ class Transaction:
     def __init__(self, attributes={}):
         self.id: Optional[int] = attributes.get('id')
   
-        self.daily_balance: Optional[DailyBalance] = attributes.get('daily_balance')
+        self.user: User = attributes['user']
         self.category: Category = attributes['category']
         self.account: Account = attributes['account']
-        # self.credit_card: CreditCard = attributes['credit_card']
-        # store
-        # tag
-        # recurrence: float = attributes['recurrence']
+        self.recurrence: Optional[Recurrence] = attributes.get('recurrence')
 
-        self.installment: int = attributes.get('installment')
         self.value: float = attributes['value']
         self.description: str = attributes['description']
         self.transaction_date = attributes['transaction_date']
         self.transaction_type: str = attributes['transaction_type']
 
-        self.status: bool = attributes.get('status', False)
-        self.ignore: bool = attributes.get('ignore', False)
-
-        # file
+        self.installment: bool = attributes['installment']
+        self.status: bool = attributes['status']
         self.observation: str = attributes['observation']
 
     def set_id(self, id):

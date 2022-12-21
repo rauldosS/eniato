@@ -22,6 +22,7 @@ class AccountFactory:
         attributes['account_type'] = data['account_type']
         attributes['color'] = data['color']
         attributes['default'] = data['default']
+        attributes['active'] = data['active']
 
         return Account(attributes)
 
@@ -35,5 +36,6 @@ class AccountFactory:
             'description': model.description,
             'account_type': model.account_type,
             'color': model.color,
-            'default': model.default
+            'default': model.default,
+            'active': model.active
         })

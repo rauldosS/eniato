@@ -54,7 +54,6 @@
     "webpack-bundle-tracker": "^0.4.3"
   },
   "moduleNameMapper": {
-    "^@transaction(.*)$": "<rootDir>/src/apps/transaction$1",
     "^@eniato-alert(.*)$": "<rootDir>/src/utils/helpers/AlertService$1",
     "^@eniato-icons(.*)$": "<rootDir>/src/utils/icons$1",
     "^@eniato-ui(.*)$": "<rootDir>/src/utils/components/UI$1",

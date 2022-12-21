@@ -27,12 +27,12 @@ export default {
           name: 'Contas',
           disabled: false,
           variant: 'primary',
-          icon: 'bank',
+          icon: 'wallet2',
           url: '/contas'
         },
         {
           name: 'Cartão de crédito',
-          disabled: false,
+          disabled: true,
           variant: 'primary',
           icon: 'credit-card',
           url: '/contas'
@@ -52,11 +52,11 @@ export default {
           url: '/contas'
         },
         {
-          name: 'Calculadoras',
-          disabled: true,
-          variant: 'primary',
-          icon: 'calculator',
-          url: '/contas'
+          name: 'Sair',
+          disabled: false,
+          variant: 'danger',
+          icon: 'box-arrow-left',
+          url: '/accounts/logout'
         }
       ]
     }

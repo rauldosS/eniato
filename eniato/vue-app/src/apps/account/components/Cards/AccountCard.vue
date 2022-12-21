@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-6">
-    <div class="card shadow-sm border-0 mb-4">
+    <div :class="`card shadow-sm border-0 mb-4 ${ !account.active ? 'opacity-80' : '' }`">
       <div class="card-header d-flex bg-transparent border-0">
         <img :src="account.financialInstitution.logo" class='logo-financial-institution'>
         <div class="fs-5 ms-2">
@@ -19,17 +19,26 @@
               <li>
                 <button
                   class="dropdown-item"
-                  href=""
-                >
-                  Detalhes
-                </button>
-              </li>
-              <li>
-                <button
-                  class="dropdown-item"
                   @click.stop="openAccountFormModal(account)"
+                  :disabled="!account.active"
                 >
                   Editar
+                </button>
+              </li>
+              <li v-if="account.active">
+                <button
+                  class="dropdown-item"
+                  @click.stop="deactivateAccount(account)"
+                >
+                  Desativar
+                </button>
+              </li>
+              <li v-else>
+                <button
+                  class="dropdown-item"
+                  @click.stop="activateAccount(account)"
+                >
+                  Ativar
                 </button>
               </li>
               <li>
@@ -47,11 +56,11 @@
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <p class="text-muted">Saldo atual</p>
-          <p class="text-muted" v-text="currencyFormat(account.openingBalance)"></p>
+          <p class="text-muted" v-text="currencyFormat(account.currentBalance)"></p>
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <p class="text-muted">Tipo de conta</p>
-          <p class="text-muted">NÃO ESTÁ EXIBINDO CORRETAMENTE!</p>
+          <p class="text-muted">{{ account.displayAccountType }}</p>
         </div>
       </div>
       <div class="account-default" v-if="account.default">
@@ -63,6 +72,8 @@
 
 <script>
 import Formatter from '@helpers/Formatter'
+import { mapActions } from 'vuex'
+import { ACCOUNT_STORE_CONSTANTS as C } from '@account/constants'
 
 export default {
   name: 'AccountCard',
@@ -70,6 +81,7 @@ export default {
   },
   props: ['account'],
   methods: {
+    ...mapActions(C.MODULE_NAME, ['deactivate', 'activate']),
     currencyFormat (money) {
       return Formatter.currency(money)
     },
@@ -78,6 +90,12 @@ export default {
     },
     openDeleteAccountModal (account) {
       this.$emit('open-delete-account-modal', account)
+    },
+    deactivateAccount (account) {
+      this.deactivate(account)
+    },
+    activateAccount (account) {
+      this.activate(account)
     }
   }
 }
@@ -97,5 +115,9 @@ export default {
   font-weight: lighter;
   color: var(--bright-color);
   border-radius: 0 0 18px 18px;
+}
+
+.dropdown-menu {
+  opacity: 100% !important;
 }
 </style>

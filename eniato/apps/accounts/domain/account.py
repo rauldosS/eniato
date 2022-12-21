@@ -25,7 +25,7 @@ class Account:
         self.account_type: str = attributes['account_type']
         self.color: str = attributes['color']
         self.default: bool = attributes['default']
-        self.display_account_type: str = 'Teste'
+        self.active: bool = attributes['active']
 
     def set_id(self, id):
         self.id = id
@@ -33,9 +33,9 @@ class Account:
     def set_default(self, default):
         self.default = default
 
-    # @property
-    # def display_account_type(self):
-    #     return dict(ACCOUNT_TYPE_DISPLAY_NAME)[self.account_type]
+    @property
+    def display_account_type(self):
+        return dict(ACCOUNT_TYPE_DISPLAY_NAME)[self.account_type]
 
     @property
     def display_opening_balance(self):

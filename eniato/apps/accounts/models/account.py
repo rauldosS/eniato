@@ -27,6 +27,8 @@ class Account(BaseModel):
         verbose_name='Cor da conta'
     )
     default = models.BooleanField(verbose_name='Conta Padrão', default=False)
+    active = models.BooleanField(verbose_name='Ativa', default=True)
+    include_on_dashboard = models.BooleanField(verbose_name='Incluir na soma da tela inicial', default=True)
 
     def __str__(self):
         return self.description

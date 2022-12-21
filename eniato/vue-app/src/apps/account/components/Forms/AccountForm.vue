@@ -62,7 +62,7 @@
 
     <b-dropdown variant="transparent" class="dropdown-icon">
       <template #button-content>
-        <b-icon icon="bank" aria-hidden="true" variant="grey"></b-icon>
+        <b-icon icon="palette" aria-hidden="true" variant="grey" scale="1.2"></b-icon>
         <div class="me-auto ms-3 d-flex align-items-center absolute" v-if="selectedColor">
           <div :class="`color ${selectedColor.value}`" :color="selectedColor.value"></div>
           {{ selectedColor.name }}
@@ -105,7 +105,6 @@ import { mapActions, mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import Treeselect from '@riophae/vue-treeselect'
-// import Loading from 'vue-loading-overlay'
 import AlertService from '@helpers/AlertService'
 import {
   ACCOUNT_STORE_CONSTANTS as C,
@@ -161,11 +160,12 @@ export default {
   data () {
     let id = null
     let financialInstitution = null
-    let openingBalance = null
+    let openingBalance = 0
     let description = null
     let accountType = null
     let color = { value: 'blue', name: 'Azul' }
-    let accountDefault = null
+    let accountDefault = false
+    let active = true
 
     if (this.account) {
       id = this.account.id
@@ -175,6 +175,7 @@ export default {
       accountType = this.account.accountType
       color = COLOR_OPTIONS.find(color => color.value === this.account.color)
       accountDefault = this.account.default
+      active = this.account.active
     }
 
     return {
@@ -196,7 +197,8 @@ export default {
         description,
         accountType,
         color,
-        default: accountDefault
+        default: accountDefault,
+        active
       }
     }
   },

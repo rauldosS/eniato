@@ -64,8 +64,7 @@ PROJECT_APPS = [
     'apps.category.apps.CategoryConfig',
     'apps.transaction.apps.TransactionConfig',
     'apps.credit_card.apps.CreditCardConfig',
-    'apps.objective.apps.ObjectiveConfig',
-    'apps.reports.apps.ReportsConfig'
+    'apps.objective.apps.ObjectiveConfig'
 ]
 
 DEV_APPS = []
@@ -216,7 +215,7 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_URL = '/accounts/login'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/transacoes'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
 

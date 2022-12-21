@@ -1,17 +1,23 @@
 from django.urls import path
 
-from .get_categories_for_income import GetCatoriesForIncome
-from .get_categories_for_expense import GetCatoriesForExpense
+from .get_all_categories_view import GetAllCategoriesView
+from .get_categories_for_income_view import GetCatoriesForIncomeView
+from .get_categories_for_expense_view import GetCatoriesForExpenseView
 
 urlpatterns = [
     path(
+        'categorias/todas',
+        GetAllCategoriesView.as_view(),
+        name='get_all_categories'
+    ),
+    path(
         'categorias/receita',
-        GetCatoriesForIncome.as_view(),
+        GetCatoriesForIncomeView.as_view(),
         name='get_income_categories'
     ),
     path(
         'categorias/despesa',
-        GetCatoriesForExpense.as_view(),
+        GetCatoriesForExpenseView.as_view(),
         name='get_expense_categories'
     )
 ]

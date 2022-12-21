@@ -3,7 +3,7 @@
     <!-- <loading :active.sync="isLoading" /> -->
     <div
       v-for="referenceDate in dailyBalanceList"
-      :key="referenceDate.day"
+      :key="referenceDate.id"
     >
       <div v-if="referenceDate.transactions.length > 0">
         <div class="d-flex">
@@ -17,6 +17,8 @@
               v-for="transaction in referenceDate.transactions"
               :key="transaction.id"
               :transaction="transaction"
+              @open-transaction-form-modal="openTransactionFormModal"
+              @reload-transaction-summary="reloadTransactionSummary"
             />
           </list-transition>
         </div>
@@ -64,6 +66,12 @@ export default {
     },
     expectedBalance (referenceDate) {
       return new Date(`${referenceDate}T10:20:30`) >= this.currentDay
+    },
+    openTransactionFormModal (transaction) {
+      this.$emit('openTransactionFormModal', transaction, transaction.transactionType)
+    },
+    reloadTransactionSummary () {
+      this.$emit('reloadTransactionSummary')
     }
   },
   data () {

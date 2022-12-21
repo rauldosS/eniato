@@ -10,7 +10,6 @@ class IndexView(TemplateView):
     template_name = 'core/index.html'
 
     def get(self, request, *args, **kwargs):
-        print('get')
         return super().get(request, *args, **kwargs)
 
 

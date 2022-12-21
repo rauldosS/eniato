@@ -1405,4 +1405,15 @@ textarea.form-control,
 
 .fab-main-container {
     z-index: 1000 !important;
+    bottom: 90px !important;
+    right: 40px !important;
+}
+
+.repeat .input-group {
+    margin: 6px 0 !important;
+}
+
+.opacity-80 {
+    opacity: .80 !important;
+    z-index: 1000 !important;
 }

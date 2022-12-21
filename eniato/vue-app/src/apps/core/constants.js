@@ -13,3 +13,33 @@ export const COLOR_OPTIONS = [
   { value: 'petrel', name: 'Cinza escuro' },
   { value: 'primer', name: 'Cinza escuro' }
 ]
+
+export const ICON_OPTIONS = [
+  { value: 'wallet2', name: '' },
+  { value: 'house', name: '' },
+  { value: 'cart', name: '' },
+  { value: 'bookmark-heart', name: '' },
+  { value: 'calendar-event', name: '' },
+  { value: 'book', name: '' },
+  { value: 'person', name: '' },
+  { value: 'geo-alt', name: '' },
+  { value: 'bicycle', name: '' },
+  { value: 'umbrella', name: '' },
+  { value: 'graph-up', name: '' },
+  { value: 'justify-left', name: '' },
+  { value: 'pie-chart', name: '' },
+  { value: 'phone', name: '' },
+  { value: 'display', name: '' },
+  { value: 'controller', name: '' },
+  { value: 'three-dots', name: '' },
+  { value: 'shop', name: '' },
+  { value: 'heart', name: '' },
+  { value: 'file', name: '' },
+  { value: 'cart2', name: '' },
+  { value: 'truck', name: '' },
+  { value: 'star', name: '' },
+  { value: 'gift', name: '' },
+  { value: 'pin-map', name: '' },
+  { value: 'smartwatch', name: '' },
+  { value: 'minecart', name: '' }
+]

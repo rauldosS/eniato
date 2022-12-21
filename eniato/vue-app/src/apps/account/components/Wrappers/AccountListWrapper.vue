@@ -68,10 +68,6 @@ export default {
       this.$refs['delete-account-modal'].open(account)
     }
   },
-  data () {
-    return {
-    }
-  },
   created () {
     this.loadAccountList().catch(error => {
       console.warn(error)

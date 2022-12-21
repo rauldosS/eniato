@@ -10,6 +10,7 @@ export class AccountFactory {
       currentBalance: dto.currentBalance,
       description: dto.description,
       accountType: dto.accountType,
+      displayAccountType: dto.displayAccountType,
       color: dto.color,
       default: dto.default,
       active: dto.active

@@ -14,6 +14,4 @@ class GetTransactionListView(RetrieveAPIView):
             self.request.query_params
         )
 
-        print('data', data.__dict__)
-
         return data

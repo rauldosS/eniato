@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@transaction": ["./src/apps/transaction"],
       "@helpers": ["./src/lib/helpers"],
       "@eniato-ui": ["./src/lib/components/UI"],
       "@eniato-icons": ["./src/lib/icons"],

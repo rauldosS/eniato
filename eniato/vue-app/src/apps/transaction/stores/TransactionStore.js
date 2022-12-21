@@ -7,7 +7,6 @@ export const TransactionStore = {
   namespaced: true,
   state: {
     loading: false,
-    saving: false,
     transaction: false,
     transactionList: []
   },
@@ -25,9 +24,15 @@ export const TransactionStore = {
   actions: {
     async save ({ commit }, form) {
       commit(C.MUTATIONS.SET_LOADING, true)
-      return transactionRepository.saveForm(form).then(event => {
+      return transactionRepository.save(form).then(event => {
         commit(C.MUTATIONS.SET_TRANSACTION, event)
       }).finally(() => {
+        commit(C.MUTATIONS.SET_LOADING, false)
+      })
+    },
+    async delete ({ commit }, transaction) {
+      commit(C.MUTATIONS.SET_LOADING, true)
+      return transactionRepository.delete(transaction).finally(() => {
         commit(C.MUTATIONS.SET_LOADING, false)
       })
     }

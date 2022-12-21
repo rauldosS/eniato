@@ -1,7 +1,5 @@
 from django.urls import path, include
-from apps.accounts.views import (
-    AccountView
-)
+from apps.accounts.views import AccountView
 from apps.accounts.views.rest import urls as rest_urls
 
 

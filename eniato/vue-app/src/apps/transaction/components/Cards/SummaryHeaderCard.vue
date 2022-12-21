@@ -1,7 +1,9 @@
 <template>
   <div>
     <b-card-group deck class="d-flex justify-content-between">
-      <b-card>
+      <b-card
+        v-b-tooltip.hover.html.bottom="expectedPeriodBalance"
+      >
         <div class="d-flex justify-content-between">
           <div class="">
             <span>Saldo atual</span>
@@ -64,25 +66,28 @@ export default {
   },
   computed: {
     periodBalance () {
-      return this.transactionSummary ? Formatter.currency(this.transactionSummary.periodBalance) : 'R$ 0,00'
+      return this.transactionSummary ? Formatter.currency(this.transactionSummary.expectedPeriodBalance) : 'R$ 0,00'
     },
     totalIncome () {
-      return this.transactionSummary ? Formatter.currency(this.transactionSummary.totalIncome) : 'R$ 0,00'
+      return this.transactionSummary ? Formatter.currency(this.transactionSummary.totalExpectedIncome) : 'R$ 0,00'
     },
     totalExpense () {
-      return this.transactionSummary ? Formatter.currency(this.transactionSummary.totalExpense) : 'R$ 0,00'
+      return this.transactionSummary ? Formatter.currency(this.transactionSummary.totalExpectedExpense) : 'R$ 0,00'
     },
     balance () {
-      return this.transactionSummary ? Formatter.currency(this.transactionSummary.balance) : 'R$ 0,00'
+      return this.transactionSummary ? Formatter.currency(this.transactionSummary.expectedBalance) : 'R$ 0,00'
+    },
+    expectedPeriodBalance () {
+      return this.transactionSummary ? `<b>Saldo:</b> ${Formatter.currency(this.transactionSummary.periodBalance)}` : 'R$ 0,00'
     },
     totalExpectedIncome () {
-      return this.transactionSummary ? `<b>Receitas previstas:</b> ${Formatter.currency(this.transactionSummary.totalExpectedIncome)}` : 'R$ 0,00'
+      return this.transactionSummary ? `<b>Receitas:</b> ${Formatter.currency(this.transactionSummary.totalIncome)}` : 'R$ 0,00'
     },
     totalExpectedExpense () {
-      return this.transactionSummary ? `<b>Despesas previstas:</b> ${Formatter.currency(this.transactionSummary.totalExpectedExpense)}` : 'R$ 0,00'
+      return this.transactionSummary ? `<b>Despesas:</b> ${Formatter.currency(this.transactionSummary.totalExpense)}` : 'R$ 0,00'
     },
     expectedBalance () {
-      return this.transactionSummary ? `<b>Balanço previsto:</b> ${Formatter.currency(this.transactionSummary.expectedBalance)}` : 'R$ 0,00'
+      return this.transactionSummary ? `<b>Balanço:</b> ${Formatter.currency(this.transactionSummary.balance)}` : 'R$ 0,00'
     }
   }
 }

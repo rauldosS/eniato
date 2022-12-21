@@ -4,6 +4,12 @@
 
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
+{% load static %}
+
+{% block custom_css %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+
 {% block content %}
 <h1>{% trans "Sign Out" %}</h1>
 
@@ -14,8 +20,7 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
   {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
+  <a class="btn btn-primary" type="submit" href="{% url 'transaction:home' %}">Voltar</a>
+  <button class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
 </form>
-
-
 {% endblock %}

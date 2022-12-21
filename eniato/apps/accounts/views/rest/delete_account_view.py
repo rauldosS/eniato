@@ -2,16 +2,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from apps.accounts.use_cases import DeleteAccountUseCase
+from apps.accounts.repositories import AccountRepository
 
 
 class DeleteAccountView(APIView):
     permission_classes = ()
     authentication_classes = ()
-    use_case = DeleteAccountUseCase()
+    repository = AccountRepository()
 
     def post(self, request, account_id):
-        self.use_case.execute(account_id)
+        self.repository.delete_by_id(account_id)
 
         return Response(
             {'message': 'Delete Account successfully'},

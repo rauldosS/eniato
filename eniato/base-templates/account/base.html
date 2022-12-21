@@ -13,34 +13,16 @@
     {% block custom_css %}
     {% endblock custom_css %}
   </head>
-  <body>
+  <body class="d-flex flex-column">
     {% block body %}
 
     {% if messages %}
     <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
     </div>
     {% endif %}
-
-    <!--
-      <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
-    </div>
-    -->
     
     <main class="form-signin w-100 m-auto">
     {% block content %}
